@@ -19,17 +19,22 @@ class Userinput(BaseModel):
     city:Annotated[str,Field(...,description='the city the user belongs to')]
     occupation: Annotated[Literal['retired','freelancer','student', 'government_job','business_owner','unemployed','private_job'],Field(...,description='Occupation of the user')]
 
+#MAKING THE INPUT CITY TO BE CASE INDEPENDENT
 
     @field_validator('city')
     @classmethod
     def normaliz_city(cls, v:str) -> str:
         v=v.strip().title()
         return v
+    
+#CALCULATING THE BMI USING @computed field 
 
     @computed_field
     @property
     def bmi(self) ->float:
         return self.weight/self.height**2
+    
+#MAKING LIFESTYLE RISK FROM THE COLUMNS SMOKER AND BMI
 
     @computed_field
     @property
@@ -41,6 +46,8 @@ class Userinput(BaseModel):
         else:
             return "low" 
 
+
+#MARKING THE CITIES AS TIER 1 AND TIER 2 
     @computed_field
     @property
     def city_tier(self) ->int:
@@ -50,7 +57,7 @@ class Userinput(BaseModel):
             return 2
         else:
             return 3
-
+#DEFINING AGE_GROUP FROM AGE 
     @computed_field
     @property
     def age_group(self) -> str:
