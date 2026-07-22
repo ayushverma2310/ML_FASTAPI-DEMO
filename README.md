@@ -1,6 +1,8 @@
 # Insurance Premium Prediction API
 
-This is just dummy project , for my own learning
+This is just dummy project , for my own learning.
+This project is made for my learning of FastApi as well as Docker(Docker image and Docker compose )
+Creating API for implementation with Ml models and using streamlit as frontend for this project
 A machine learning-powered REST API and web application for predicting insurance premiums based on user demographics and lifestyle factors.
 
 ## 📋 Features
