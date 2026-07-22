@@ -1,5 +1,6 @@
 # Insurance Premium Prediction API
 
+This is just dummy project , for my own learning
 A machine learning-powered REST API and web application for predicting insurance premiums based on user demographics and lifestyle factors.
 
 ## 📋 Features
