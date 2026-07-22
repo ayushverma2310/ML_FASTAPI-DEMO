@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field,computed_field
+from pydantic import BaseModel, Field,computed_field,field_validator
 from typing import Annotated,Optional,Literal
 import pandas as pd
 import pickle
@@ -10,8 +10,9 @@ with open('model.pkl','rb') as f:
 
 print(model)
 print(model.named_steps["preprocessor"].named_transformers_["cat"].categories_)
-
+MODEL_VERSION='1.0.0'
 app=FastAPI()
+
 
 tier_1_cities=["Mumbai", "Delhi", "Bangalore", "Chennai", "Kolkata", "Hyderabad", "Pune"]
 tier_2_cities=[
@@ -31,6 +32,13 @@ class userinput(BaseModel):
     smoker:Annotated[bool,Field(...,description='is the user smoker or not')]
     city:Annotated[str,Field(...,description='the city the user belongs to')]
     occupation: Annotated[Literal['retired','freelancer','student', 'government_job','business_owner','unemployed','private_job'],Field(...,description='Occupation of the user')]
+
+
+    @field_validator('city')
+    @classmethod
+    def normaliz_city(cls, v:str) -> str:
+        v=v.strip().title()
+        return v
 
     @computed_field
     @property
@@ -69,10 +77,23 @@ class userinput(BaseModel):
         else:
             return "senior"
 
-
+#human readable , anyone hits this url , understandable by human
 @app.get("/")
 def home():
-    return{"message":"Fatapi is running!"}
+    return{"message":"Fastapi is running!"}
+
+#deployment m aws, they will use this endpoint to know that the url is working properly
+
+@app.get('/health')
+def health_check():
+    return{
+        'status':'OK',
+        'model_loaded' : model is not None 
+        'version' : MODEL_VERSION,
+    }
+
+
+
 @app.post('/predict')
 def predict_premium(data:userinput):
 
