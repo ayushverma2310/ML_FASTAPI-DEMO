@@ -196,3 +196,17 @@ Created for insurance premium prediction using machine learning.
 ---
 
 **Last Updated:** 2026-07-22
+
+### DOCKER COMMANDS FOR CREATING IMAGE
+
+'''bash 
+powershell -- docker build -t username/name of the image .
+
+'''
+
+### DOCKER COMMAND TO make container of the Image
+
+'''bash 
+powerhsell-- docker run -p 8888:5000(first one is apna machine ka port : docker ke andar ka port)
+
+'''

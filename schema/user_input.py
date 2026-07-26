@@ -68,4 +68,4 @@ class Userinput(BaseModel):
         elif self.age<60:
             return "middle_aged"
         else:
-            return "senior"
+            return "senior"  
