@@ -5,11 +5,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+
 #copy the requiremens and install dependencies
-
-
 COPY requirements.txt
-
 RUN pip install --no-cache-dir -r requiremens.txt
 
 COPY . .
